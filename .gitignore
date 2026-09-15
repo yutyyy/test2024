@@ -1,0 +1,10 @@
+# Python
+customer_id_app/.venv/
+customer_id_app/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Local runtime files
+customer_id_app/data/images/
+customer_id_app/.pytest_cache/
