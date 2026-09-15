@@ -206,11 +206,14 @@ def extract_name_candidate(text):
         idx = normalized.find(label)
         if idx != -1:
             after = normalized[idx + len(label):].lstrip()
-            m = re.match(r"([\u4e00-\u9fa5]{2,8})", after)
+            # 複数の漢字グループをスペースを越えて集める（最大8文字）
+            # パターン：漢字群 + 任意のスペース + 漢字群の繰り返し
+            m = re.match(r"([\u4e00-\u9fa5]+(?:\s+[\u4e00-\u9fa5]+)?)", after)
             if m:
-                candidate = m.group(1)
-                if not _reject_address_like_name(candidate):
-                    return candidate
+                candidate = m.group(1).replace(" ", "")
+                if len(candidate) >= 2 and len(candidate) <= 8:
+                    if not _reject_address_like_name(candidate):
+                        return candidate
     
     return ""
 
