@@ -115,21 +115,16 @@ class CustomerApp(QWidget):
         fields = extract_id_fields(self.image_path, result["text"])
         id_type = fields.get("id_type") or detect_id_type(self.image_path)
         self.id_type_edit.setText(id_type)
-        personal_number = fields.get("personal_number", "")
 
         if parsed["name"]:
             self.name_edit.setText(parsed["name"])
         if parsed["birth_date"]:
             self.birth_edit.setText(parsed["birth_date"])
 
-        extra_info = ""
-        if personal_number:
-            extra_info = f"\n個人番号: {personal_number}"
-
         self.result_box.setPlainText(
             f"種別判定: {id_type}\n\n"
             f"OCR結果:\n{result['text'][:2000]}\n\n"
-            f"候補: name={parsed['name']}, birth_date={parsed['birth_date']}{extra_info}"
+            f"候補: name={parsed['name']}, birth_date={parsed['birth_date']}"
         )
 
     def save_customer(self):
